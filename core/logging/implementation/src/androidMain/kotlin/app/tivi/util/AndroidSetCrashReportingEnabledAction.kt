@@ -7,6 +7,11 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 internal object AndroidSetCrashReportingEnabledAction : SetCrashReportingEnabledAction {
   override fun invoke(enabled: Boolean) {
-    FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(enabled)
+    try {
+      FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(enabled)
+    } catch (e: Exception) {
+      // Firebase might not be setup
+    }
+
   }
 }

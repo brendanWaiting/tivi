@@ -91,9 +91,13 @@ private class CrashlyticsTree : Timber.Tree() {
   }
 
   override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-    CrashlyticsKotlin.logMessage(message)
-    if (t != null) {
-      CrashlyticsKotlin.sendHandledException(t)
+    try {
+      CrashlyticsKotlin.logMessage(message)
+      if (t != null) {
+        CrashlyticsKotlin.sendHandledException(t)
+      }
+    } catch (t: Throwable) {
+      // Firebase might not be setup
     }
   }
 }
